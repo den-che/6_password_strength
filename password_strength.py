@@ -1,24 +1,23 @@
 import re
 
-def upper_case(password):
-    return re.search('[A-Z]', password)
+def check_numbers(password):
+    return re.findall('\d',password)
 
-def lower_case(password):
-    return re.search('[a-z]',password)
-
-def check_special_symbols(password):
-    return re.search('\d',password)
+def check_symbols(password):
+    return re.findall('\W',password)
 
 def get_password_strength(password):
     strength=0
-    if upper_case(password):
+    if password.upper() or password.lower():
         strength+=1
-    if lower_case(password):
+    if check_numbers(password):
+        strength+=2
+    if len(password)>=9:
         strength+=1
-    if check_special_symbols(password):
-        strength+=1
+    if check_symbols(password):
+        strength+=3
     return strength
 
 
 if __name__ == '__main__':
-    print(get_password_strength("Pass"))
+    print(get_password_strength("Антон34234"))
